@@ -12,14 +12,19 @@ function random(min, max) {
   const num = Math.floor(Math.random() * (max - min + 1)) + min;
   return num;
 }
-function Ball(x, y, velX, velY, color, size) {
+function Shape(x, y, velX, velY, exists) {
   this.x = x;
   this.y = y;
   this.velX = velX;
   this.velY = velY;
-  this.color = color;
-  this.size = size;
+  this.exists = exists;
 }
+function Ball(x, y, velX, velY, exists, color, size) {
+Shape.call(this, x, y, velX, velY, exists)
+this.color = color;
+this.size = size;
+}
+
 Ball.prototype.draw = function() {
   ctx.beginPath();
   ctx.fillStyle = this.color;
@@ -82,6 +87,7 @@ while (balls.length < 25) {
     random(0 + size,height - size),
     random(-7,7),
     random(-7,7),
+    true,
     'rgb(' + random(0,255) + ',' + random(0,255) + ',' + random(0,255) +')',
     size
   );
