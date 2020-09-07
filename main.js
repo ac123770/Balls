@@ -40,20 +40,21 @@ EvilCircle.prototype.draw = function(){
 }
 
 EvilCircle.prototype.checkBounds = function(){
+  // The ball is too much to the right
   if ((this.x - this.size) >= width) {
-    this.velX = +(this.velX);
+    this.x = width - this.size;
   }
-
+  // The ball is too much to the left
   if ((this.x - this.size) <= 0) {
-    this.velX = -(this.velX);
+    this.x = this.size;
   }
-
+  // The ball is too low
   if ((this.y - this.size) >= height) {
-    this.velY = +(this.velY);
+    this.y = height - this.size;
   }
-
+  // The ball is too high
   if ((this.y - this.size) <= 0) {
-    this.velY = -(this.velY);
+    this.y = this.size;
   }
 
 }
@@ -81,6 +82,9 @@ EvilCircle.prototype.collisionDetect = function(){
 
       if (distance < this.size + balls[j].size) {
         balls[j].exists = false;
+        ballCount = ballCount -1
+  
+  paragraph.innerText="ball Count " + ballCount;
       }
     }
   }
@@ -151,6 +155,9 @@ evilCircle = new EvilCircle(100, 100, true);
 
 evilCircle.setControls();
 
+const paragraph=document.getElementById("score")
+let ballCount=0
+
 while (balls.length < 25) {
   let size = random(10,20);
   let ball = new Ball(
@@ -164,7 +171,8 @@ while (balls.length < 25) {
     'rgb(' + random(0,255) + ',' + random(0,255) + ',' + random(0,255) +')',
     size
   );
-
+ballCount = ballCount +1
   balls.push(ball);
+  paragraph.innerText="ball Count " + ballCount;
 }
 loop();
